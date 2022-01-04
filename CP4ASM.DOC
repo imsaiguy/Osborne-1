@@ -1,0 +1,49 @@
+Split cp4ker.hex into two files:
+         f1.hex
+         f2.hex
+download files to osborne:
+PIP F1.HEX=PTR:
+^Z
+PIP F2.HEX=PTR
+^Z
+combine files:
+PIP CP4KER.HEX=F1.HEX,F2.HEX
+download cp4osb.hex to osborne:
+PIP CP4OSB.HEX=PTR:
+^z
+
+Creating a run-able Kermit from the distribution kit:
+
+	A>ddt cp4ker.hex
+	NEXT  PC
+	3500 0100
+	-icp4osb.hex
+	-r
+	NEXT  PC
+	xxxx 0000
+	-^C
+	A>save dd kermit40.com
+
+The page count ("dd") used in the SAVE command is calculated from the last
+address ("xxxx") given by DDT in response to the R command:  divide this
+number by 100 hex, rounding up, then convert to decimal:  384F becomes 39
+hex, which is 57 decimal; but 3700 becomes 37 hex, or 55 decimal.
+Be careful not to overwrite your running Kermit, if any, with this new
+version until you've tested it. (I used 59 for dd)
+
+
+Test your new Kermit by running it.  If it gives you a prompt, it might be
+OK. (don't delete your old one yet...).  Instead of a prompt, you could get
+one of two messages indicating that the configuration information is invalid:
+    ?Kermit has not been configured for a target system
+	or
+    ?Consistency check on configuration failed
+Of course, neither of these messages should appear if you're building Kermit
+from the distribution kit.  The first message indicates that the overlay was
+not found where the system-independent module expected to find it, probably
+because the overlay address is incorrect; the second indicates that the version
+of CP4LNK used in the system-dependent module is incompatible with the system-
+independent module.
+
+
+
