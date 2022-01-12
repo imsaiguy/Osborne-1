@@ -4,7 +4,7 @@ Split cp4ker.hex into two files:
 download files to osborne:
 PIP F1.HEX=PTR:
 ^Z
-PIP F2.HEX=PTR
+PIP F2.HEX=PTR:
 ^Z
 combine files:
 PIP CP4KER.HEX=F1.HEX,F2.HEX
